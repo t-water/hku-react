@@ -26,13 +26,13 @@ class DishDetail extends Component{
 	}
 
 	renderComments(dish){
-		if(this.props.selectedDish !== null){
+		if(this.props.selectedDish !== undefined){
 			if(this.props.selectedDish.comments.length !== 0 ){
 				const comments = this.props.selectedDish.comments.map(comment => {
 					return(
 						<li key = {comment.id}>
 							<p>{comment.comment}</p>
-							<p>{`-- ${comment.author} , ${comment.date}`}</p>
+							<p>{`-- ${comment.author} , ${new Intl.DateTimeFormat('en-US', {year: 'numeric', month: 'short', day: '2-digit'}).format(new Date(Date.parse(comment.date)))}`}</p>
 						</li>
 					)
 				})
@@ -42,7 +42,6 @@ class DishDetail extends Component{
 						<ul className = "list-unstyled">
 							{comments}
 						</ul>
-
 					</div>
 				)
 			}
@@ -61,14 +60,16 @@ class DishDetail extends Component{
 
 	render(){
 		return(
-			<div className="row">
-	        	<div  className="col-12 col-md-5 m-1">
-	        		{this.renderDish(this.props.selectedDish)}
-	        	</div>
-	        	<div  className="col-12 col-md-5 m-1">
-	        		{this.renderComments(this.props.selectedDish)}
-	        	</div>
-            </div>
+			<div className = "container">
+				<div className="row">
+		        	<div className="col-12 col-md-5 m-1">
+		        		{this.renderDish(this.props.selectedDish)}
+		        	</div>
+		        	<div className="col-12 col-md-5 m-1">
+		        		{this.renderComments(this.props.selectedDish)}
+		        	</div>
+	            </div>
+	        </div>
 		)
 	}
 }
